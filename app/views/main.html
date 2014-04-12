@@ -1,0 +1,54 @@
+<style>
+    #graph-container {
+        width: 1000px;
+        height: 400px;
+        border: 1px solid #ddd;
+        position: relative;
+     }
+</style>
+
+<div class="header">
+    <h3 class="text-muted">IA - Search</h3>
+</div>
+
+<div class="row">
+    <div class="col-md-5">
+        <div class="form-group">
+            <label class="control-label">Start</label>
+            <select ng-model="problem.start_city" ng-options="c.label for c in cities" class="form-control" ng-change="onChangeCity()"></select>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="form-group">
+            <label class="control-label">End</label>
+            <select ng-model="problem.end_city" ng-options="c.label for c in cities" class="form-control" ng-change="onChangeCity()"></select>
+        </div>
+    </div>
+    <div class="col-md-2">
+    	<div class="form-group">
+            <label class="control-label">Strategy</label>
+            <select ng-model="problem.strategy" ng-options="s for s in strategies" class="form-control" ng-change="onChangeCity()"></select>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="graph-container"></div>
+    </div>
+</div>
+
+<div class="row" style="margin-top: 10px;">
+	<div class="col-md-1" style="margin:0 auto;text-align: center;">
+		<img src="http://placehold.it/64/2ECC40/fff" alt="start" class="img-circle"/>
+        <div>Start</div>
+	</div>
+    <div class="col-md-1" style="margin:0 auto;text-align: center;">
+        <img src="http://placehold.it/64/B10DC9/fff" alt="end" class="img-circle"/>
+        <div>End</div>
+	</div>
+    <div class="col-md-1" style="margin:0 auto;text-align: center;">
+        <img src="http://placehold.it/64/7FDBFF/fff" alt="visited" class="img-circle"/>
+        <div>Visited</div>
+	</div>
+</div>
