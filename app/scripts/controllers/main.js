@@ -471,7 +471,7 @@ var search = {
         return null;
     },
     /**
-     * http://en.wikipedia.org/wiki/A%2a_search_algorithm#Example
+     * Referência: http://en.wikipedia.org/wiki/A%2a_search_algorithm#Example
      */
     aStar: function(path) {
         var visited = []; // came_from
@@ -496,7 +496,7 @@ var search = {
             // the node in openset having the lowest f_score[] value
             var min  = _.min(f_score, function (obj) { return obj.distance });
             var node = _.find(openset, function (obj) { return obj.id === min.id });
-            console.log(node);
+            //console.log(node);
             // HACK: node as vezes retorna undefined
             if (! node) {
                 return null;
@@ -528,10 +528,14 @@ var search = {
                     continue;
                 }
                 
-                var tentative_score = _.where(score, {id: node.id}).cost + this.distanceBetween(node, adj[i]);
-                if (! _.find(openset, function (obj) { return adj[i].id === obj.id})
+                var tentative_score = _.find(score, function (obj){
+                    return obj.id === node.id;
+                }).cost + this.distanceBetween(node, adj[i]);
+                
+                // if node not exists
+                if (! _.find(openset, function (obj) { return adj[i].id === obj.id; })
                     || tentative_score < adj[i].cost) {
-                    // if node not exists
+                    
                     openset.push(adj[i]);
                     visited.push({
                         id: adj[i].id,
@@ -543,27 +547,15 @@ var search = {
                     score.push({id: adj[i].id, cost: adj[i].cost});
                     f_score.push({id: adj[i].id, distance: this.distanceBetween(adj[i], path.target)});
                     
+                    // if adj[i] not found in the openset
                     if (! _.find(openset, function (obj) { return adj[i].id === obj.id})) {
                         openset.push(adj[i]);
                     }
                 }
             }
         }
-        
+        // retorna null caso não encontre.
         return null;
-        
-        // expandir
-        //var cities = [], aux, city, i, j;
-        //for (i = 0; i < node.adj.length; i++) {
-        //    city = node.adj[i].city;
-        //    aux = node.adj[i].cost;
-        //    // insertion sort!
-        //    for(j = i - 1; j > -1 && node.adj[j].cost > aux; j--) {
-        //        cities[j + 1] = cities[j];
-        //    }
-        //    cities[j + 1] = city;
-        //}
-        //var adj = path.graph.nodes(cities);
     },
     solution: function (graph, tree, target) {
         var result = $.grep(tree, function (e) {
